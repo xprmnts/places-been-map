@@ -3,86 +3,94 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
 
-    <title>Places</title>
+  <title>Places</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/sidebar.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/app.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-    <div id="wrapper">
+  <div id="wrapper">
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Places
-                    </a>
-                </li>
-                <li>
-                    <a href="#">England</a>
-                </li>
-                <li>
-                    <a href="#">France</a>
-                </li>
-                <li>
-                    <a href="#">Morocco</a>
-                </li>
-                <li>
-                    <a href="#">Spain</a>
-                </li>
-                <li>
-                    <a href="#">Italy</a>
-                </li>
-                <li>
-                    <a href="#">Romanio</a>
-                </li>
-                <li>
-                    <a href="#">Turkey</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-          <nav class="navbar navbar-default">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Menu</a>
-              </div>
-            </div>
-          </nav>
-        </div>
-        <!-- /#page-content-wrapper -->
-
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+          <a href="#">Places</a>
+        </li>
+        <li>
+          <a href="#">England</a>
+        </li>
+        <li>
+          <a href="#">France</a>
+        </li>
+        <li>
+          <a href="#">Morocco</a>
+        </li>
+        <li>
+          <a href="#">Spain</a>
+        </li>
+        <li>
+          <a href="#">Italy</a>
+        </li>
+        <li>
+          <a href="#">Romanio</a>
+        </li>
+        <li>
+          <a href="#">Turkey</a>
+        </li>
+      </ul>
     </div>
-    <!-- /#wrapper -->
+    <!-- /#sidebar-wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Menu</a>
+          </div>
+        </div>
+      </nav>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+      <!--Create a place to put the map in the HTML-->
+    <div class="container-fluid map-container">
+      <div id="map"></div>
+    </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
 
-    <!-- Menu Toggle Script -->
 
-    <script>
-    $('#menu-toggle').click(function (e) {
-        e.preventDefault();
-        $('#wrapper').toggleClass('toggled');
-      });
-    </script>
+
+
+  <!-- jQuery -->
+  <script src="js/jquery.js"></script>
+
+  <!-- Bootstrap Core JavaScript -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script src="js/menu.js"></script>
+
+  <!-- Map App Script -->
+  <script src="js/mapapp.js"></script>
+
+  <!--Load the JS API ASYNCHRONOUSLY below.-->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9X9VYp1Ty3NFtopeGZnnBozViS4wnQw4&v=3&callback=initMap"></script>
+
+
+
 
 </body>
 
