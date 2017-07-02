@@ -5,7 +5,7 @@ function initMap() {
           lat: 40.7413549,
           lng: -73.99802439999996,
         },
-        zoom: 13,
+        zoom: 2,
       });
   var tribeca = {
         lat: 40.719526,

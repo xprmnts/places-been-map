@@ -22,32 +22,24 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
+    <!-- TODO: Render Nav with Knockout Bindings: Level 1 Countries -->
+    <!-- TODO: Render Nav with Knockout: Level 2 Cities -->
+    <!-- TODO: Render Nav with Knockout: Level 3 Places -->
+    <!-- TODO: Create Dropdown to choose continent to list-style -->
+    <!-- TODO: Create & Render Like/Dislike icon that updates when user interacts with
+    infowindow on marker -->
     <div id="sidebar-wrapper">
-      <ul class="sidebar-nav">
-        <li class="sidebar-brand">
-          <a href="#">Places</a>
-        </li>
-        <li>
-          <a href="#">England</a>
-        </li>
-        <li>
-          <a href="#">France</a>
-        </li>
-        <li>
-          <a href="#">Morocco</a>
-        </li>
-        <li>
-          <a href="#">Spain</a>
-        </li>
-        <li>
-          <a href="#">Italy</a>
-        </li>
-        <li>
-          <a href="#">Romanio</a>
-        </li>
-        <li>
-          <a href="#">Turkey</a>
-        </li>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="continentMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Cities
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="continentMenu" data-bind="foreach: placeList">
+          <li><a href="#" data-bind="text: city, click: $parent.placesByCity"></a></li>
+        </ul>
+      </div>
+      <ul class="nav nav-list" data-bind = "foreach: places">
+        <li ><a href="#" data-bind = "text: name, click: $parent.mapLocation"></a></li>
       </ul>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -89,8 +81,11 @@
   <!--Load the JS API ASYNCHRONOUSLY below.-->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9X9VYp1Ty3NFtopeGZnnBozViS4wnQw4&v=3&callback=initMap"></script>
 
+  <!-- TODO: Add KnockOut Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 
-
+  <!-- TODO: ADD app script to handle ViewModel -->
+  <script src="js/app.js"></script>
 
 </body>
 

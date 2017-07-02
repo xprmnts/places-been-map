@@ -54,8 +54,6 @@ Section Start: Side Bar for Navigation
 /* Sidebar Styles */
 
 .sidebar-nav {
-    position: absolute;
-    top: 0;
     width: 250px;
     margin: 0;
     padding: 0;
@@ -154,10 +152,24 @@ Start Section: Map Styling
   height: 90vh;
 }
 
-.map-container{
+.map-container {
   padding: 0px;
 }
 
 /*
 End Section: Map Styling
 */
+
+/*TODO: Nav styling for Countries, Cities, Places & Like/Dislike Icon*/
+
+#continentMenu {
+  width: 100%;
+}
+
+.dropdown-menu {
+  width: 100%;
+}
+
+.glyphicon {
+  top: 3px;
+}
