@@ -34,7 +34,7 @@
           Cities
           <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu" aria-labelledby="continentMenu" data-bind="foreach: placeList">
+        <ul class="dropdown-menu" aria-labelledby="cityMenu" data-bind="foreach: cities">
           <li><a href="#" data-bind="text: city, click: $parent.placesByCity"></a></li>
         </ul>
       </div>
@@ -76,15 +76,23 @@
   <script src="js/menu.js"></script>
 
   <!-- Map App Script -->
+  <script src="js/places.js"></script>
+
+  <!-- A community supported clustering library sourced from:
+https://github.com/googlemaps/v3-utility-library/tree/master/markerclustererplus
+ -->
+  <script src="js/markerclusterer.js"></script>
+
+  <!-- Initial Load of all the places -->
   <script src="js/mapapp.js"></script>
 
   <!--Load the JS API ASYNCHRONOUSLY below.-->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9X9VYp1Ty3NFtopeGZnnBozViS4wnQw4&v=3&callback=initMap"></script>
 
-  <!-- TODO: Add KnockOut Script -->
+  <!-- Add KnockOut Script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 
-  <!-- TODO: ADD app script to handle ViewModel -->
+  <!-- ADD app script to handle ViewModel -->
   <script src="js/app.js"></script>
 
 </body>
