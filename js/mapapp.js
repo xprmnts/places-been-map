@@ -25,7 +25,7 @@ function initMap() {
     markers.push(marker);
 
     // Create an onclick event to open an infowindow at each marker.
-    marker.addListener('click', function () {
+    marker.addListener('click', function (x) {
       populateInfoWindow(this, infowindow, initialPlaces[this.id]);
     });
 
@@ -36,8 +36,8 @@ function initMap() {
   map.fitBounds(bounds);
 
   // Use markerclustererplus community repo to cluster markers if appropriate
-  var markerCluster = new MarkerClusterer(map, markers,
-    { imagePath: '/images/m' });
+  // var markerCluster = new MarkerClusterer(map, markers,
+  //   { imagePath: '/images/m' });
 
 }
 

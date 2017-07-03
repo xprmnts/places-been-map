@@ -27,6 +27,9 @@ var ViewModel = function () {
   // For each place in list create a list of unique cities to display in filter
   initialPlaces.forEach(function (placeItem) {
 
+    // Render all places at once
+    _this.places().push(new Place(placeItem));
+
     // If city already exist in list don't push current place as a new city
     var match = ko.utils.arrayFirst(_this.cities(), function (item) {
       return placeItem.city === item.city();
