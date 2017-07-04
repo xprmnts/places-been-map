@@ -234,10 +234,18 @@ function initMap() {
 
     // Create an onclick event to open an infowindow at each marker.
     marker.addListener('click', function () {
-      toggleBounce(this, infowindow);
+      for (i = 0; i < markers.length; i++) {
+        markers[i].setAnimation(null);
+      }
+
+      toggleBounce(this);
       if (infowindow.isOpen() === false) {
         populateInfoWindow(this, infowindow, initialPlaces[this.id]);
       } else {
+        if (marker.getAnimation() !== null) {
+          populateInfoWindow(this, infowindow, initialPlaces[this.id]);
+        }
+
         infowindow.close();
       }
 
@@ -269,6 +277,7 @@ function initMap() {
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
 function populateInfoWindow(marker, infowindow, placeItem) {
+
   infowindow.marker = marker;
   var position = '';
   if (typeof placeItem.location == 'function') {
@@ -325,10 +334,9 @@ function makeMarkerIcon(markerColor) {
   return markerImage;
 }
 
-function toggleBounce(marker, infowindow) {
+function toggleBounce(marker) {
   if (marker.getAnimation() !== null) {
     marker.setAnimation(null);
-    infowindow.setMarker = null;
   } else {
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
