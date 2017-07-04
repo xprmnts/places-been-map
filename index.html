@@ -33,8 +33,12 @@
           Cities
           <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu" aria-labelledby="cityMenu" data-bind="foreach: cities">
-          <li><a href="#" data-bind="text: city, click: $parent.placesByCity"></a></li>
+        <ul class="dropdown-menu" aria-labelledby="cityMenu">
+          <li><a href="#" data-bind="click: showAllPlaces">All Cities</a></li>
+          <li role="separator" class="divider"></li>
+          <!-- ko foreach: cities -->
+            <li><a href="#" data-bind="text: city, click: $parent.placesByCity"></a></li>
+          <!-- /ko -->
         </ul>
       </div>
       <ul class="nav nav-list" data-bind = "foreach: places">

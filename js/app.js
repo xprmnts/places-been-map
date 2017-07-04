@@ -24,10 +24,23 @@ var ViewModel = function () {
   this.cities = ko.observable([]);
   this.places = ko.observableArray([]);
 
+  this.showAllPlaces = function () {
+    console.log('we are here!');
+    _this.places.removeAll();
+
+    // For each place in list create a list of unique cities to display in filter
+    initialPlaces.forEach(function (placeItem) {
+      console.log(placeItem.name);
+
+      // Render all places at once when app loads
+      _this.places.push(new Place(placeItem));
+    });
+  };
+
   // For each place in list create a list of unique cities to display in filter
   initialPlaces.forEach(function (placeItem) {
 
-    // Render all places at once
+    // Render all places at once when app loads
     _this.places().push(new Place(placeItem));
 
     // If city already exist in list don't push current place as a new city
