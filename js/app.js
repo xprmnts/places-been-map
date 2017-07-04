@@ -111,6 +111,7 @@ var ViewModel = function () {
   // When a place is clicked on the navigation menu center the map on it
   // and then open up the infowindow related to it
   this.mapLocation = function (placeItem) {
+
     // center map on place coordinates
     var plat = placeItem.location()[0].lat;
     var plng = placeItem.location()[0].lng;

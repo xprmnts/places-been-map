@@ -191,6 +191,11 @@ function initMap() {
   // mouses over the marker.
   var highlightedIcon = makeMarkerIcon('ccc');
 
+  google.maps.InfoWindow.prototype.isOpen = function () {
+      var map = this.getMap();
+      return (map !== null && typeof map !== 'undefined');
+    };
+
   map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControlOptions: {
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain', 'styled_map'],
@@ -229,8 +234,13 @@ function initMap() {
 
     // Create an onclick event to open an infowindow at each marker.
     marker.addListener('click', function () {
-      toggleBounce(this);
-      populateInfoWindow(this, infowindow, initialPlaces[this.id]);
+      toggleBounce(this, infowindow);
+      if (infowindow.isOpen() === false) {
+        populateInfoWindow(this, infowindow, initialPlaces[this.id]);
+      } else {
+        infowindow.close();
+      }
+
     });
 
     // Two event listeners - one for mouseover, one for mouseout,
@@ -294,6 +304,7 @@ function populateInfoWindow(marker, infowindow, placeItem) {
 
     infowindow.addListener('closeclick', function () {
       infowindow.setMarker = null;
+      marker.setAnimation(null);
     });
 
   }).fail(function () {
@@ -314,9 +325,10 @@ function makeMarkerIcon(markerColor) {
   return markerImage;
 }
 
-function toggleBounce(marker) {
+function toggleBounce(marker, infowindow) {
   if (marker.getAnimation() !== null) {
     marker.setAnimation(null);
+    infowindow.setMarker = null;
   } else {
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
