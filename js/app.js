@@ -115,6 +115,8 @@ var ViewModel = function () {
     // clear infowindow and set marker poisition
     infowindow = new google.maps.InfoWindow({});
 
+    // Define marker to populate as one that matches the name of the currently
+    // selected palce based on its name
     var markerToPop = markers.forEach(function (marker) {
       if (placeItem.name() === marker.title) {
         return marker;
