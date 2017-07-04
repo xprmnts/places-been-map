@@ -99,6 +99,10 @@ when it is toggled to allow space for the sidebar nav */
   background-color: #000;
 }
 
+.nav li a:focus {
+  background-color: #000;
+}
+
 #dropdownMenu {
   width: 100%;
 }
