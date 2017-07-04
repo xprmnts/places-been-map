@@ -9,15 +9,33 @@ Section Start: Side Bar for Navigation
 
 /* Toggle Styles */
 
-#wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-    height: 100%;
+.navbar-header {
+  margin-top: 15px;
 }
 
+/* Hamburger Icon Style */
+.bar1, .bar2 {
+    width: 20px;
+    height: 1px;
+    background-color: #fff;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+.change .bar1 {
+    transform: rotate(45deg)translate(0px, 5px);
+}
+.change .bar2 {
+    transform: rotate(-45deg)translate(0px, -5px);
+}
+
+/* The entire map is inside a wrapper and we define what will happen
+when it is toggled to allow space for the sidebar nav */
+#wrapper {
+    padding-left: 0;
+    transition: all 0.5s ease-out;
+    height: 100%;
+}
+/* when toggled move content of wrapper 250px */
 #wrapper.toggled {
     padding-left: 250px;
 }
@@ -30,13 +48,10 @@ Section Start: Side Bar for Navigation
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #000;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
+    background: #333;
     transition: all 0.5s ease;
 }
-
+/* when wrapper is toggled set the width of the side bar */
 #wrapper.toggled #sidebar-wrapper {
     width: 250px;
 }
@@ -65,49 +80,52 @@ Section Start: Side Bar for Navigation
     line-height: 40px;
 }
 
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
-}
-
-.sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.2);
-}
-
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
-    text-decoration: none;
-}
-
-.sidebar-nav > .sidebar-brand {
-    height: 65px;
-    font-size: 18px;
-    line-height: 60px;
-}
-
-.sidebar-nav > .sidebar-brand a {
-    color: #999999;
-}
-
-.sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
-}
-
-/*
-Section End: Side Bar for Navigation
- */
-
 .btn {
-  margin-top: 7px;
+  margin-top: 0px;
+  border: none;
+  border-radius: 0px;
+  height: 50px;
 }
 
 .navbar {
   margin-bottom: 0px;
 }
+
+.nav li a {
+  color: #fff;
+}
+
+.nav li a:hover {
+  background-color: #000;
+}
+
+#continentMenu {
+  width: 100%;
+}
+
+.dropdown-menu {
+  width: 100%;
+}
+
+.glyphicon {
+  top: 3px;
+}
+
+.navbar-default {
+    background-color: #333;
+}
+
+
+@media (min-width: 768px) {
+  .navbar {
+      border-radius: 0px;
+      border: none;
+  }
+}
+
+/*
+Section End: Side Bar for Navigation
+ */
 
 /*
 Media Query Start: Side Bar for Navigation
@@ -159,17 +177,3 @@ Start Section: Map Styling
 /*
 End Section: Map Styling
 */
-
-/*TODO: Nav styling for Countries, Cities, Places & Like/Dislike Icon*/
-
-#continentMenu {
-  width: 100%;
-}
-
-.dropdown-menu {
-  width: 100%;
-}
-
-.glyphicon {
-  top: 3px;
-}

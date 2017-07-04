@@ -185,11 +185,11 @@ function initMap() {
     { name: 'Styled Map' });
 
   // Style the markers a bit. This will be our listing marker icon.
-  var defaultIcon = makeMarkerIcon('0091ff');
+  var defaultIcon = makeMarkerIcon('444');
 
   // Create a "highlighted location" marker color for when the user
   // mouses over the marker.
-  var highlightedIcon = makeMarkerIcon('FFFF24');
+  var highlightedIcon = makeMarkerIcon('ccc');
 
   map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControlOptions: {
@@ -201,7 +201,11 @@ function initMap() {
   map.mapTypes.set('styled_map', styledMapType);
   map.setMapTypeId('styled_map');
 
-  var infowindow = new google.maps.InfoWindow();
+  var infowindow = new google.maps.InfoWindow({
+
+    // Set max width for consistency (also set image width to avoid img clipping)
+    maxWidth: 320,
+  });
   var bounds = new google.maps.LatLngBounds();
 
   // The following group uses the location array to create an array of markers on initialize.
@@ -224,7 +228,7 @@ function initMap() {
     markers.push(marker);
 
     // Create an onclick event to open an infowindow at each marker.
-    marker.addListener('click', function (x) {
+    marker.addListener('click', function () {
       populateInfoWindow(this, infowindow, initialPlaces[this.id]);
     });
 
@@ -255,7 +259,13 @@ function initMap() {
 // on that markers position.
 function populateInfoWindow(marker, infowindow, placeItem) {
   infowindow.marker = marker;
-  var position = { lat: placeItem.location()[0].lat, lng: placeItem.location()[0].lng };
+  var position = '';
+  if (typeof placeItem.location == 'function') {
+    position = { lat: placeItem.location()[0].lat, lng: placeItem.location()[0].lng };
+  } else {
+    position = { lat: placeItem.location.lat, lng: placeItem.location.lng };
+  }
+
   infowindow.setPosition(position);
   var flickrAPI = 'https://api.flickr.com/services/rest/?';
   $.getJSON(flickrAPI, {
@@ -277,7 +287,7 @@ function populateInfoWindow(marker, infowindow, placeItem) {
     '_' +
     data.secret +
     '.jpg';
-    var infoWindowImage = '<img src="' + src + '" alt="' + data.title + '">';
+    var infoWindowImage = '<img src="' + src + '" width="320" alt="' + data.title + '">';
     infowindow.setContent(infoWindowImage);
     infowindow.open(map, marker);
 
