@@ -38,6 +38,7 @@ var ViewModel = function () {
     // adjust the bounds of the map to fit the newly filtered list of places
     var bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < markers.length; i++) {
+      markers[i].setAnimation(google.maps.Animation.DROP);
       bounds.extend(markers[i].getPosition());
     }
 
@@ -91,6 +92,7 @@ var ViewModel = function () {
     // adjust the bounds of the map to fit the newly filtered list of places
     var bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < markers.length; i++) {
+      markers[i].setAnimation(google.maps.Animation.DROP);
       if (titles.indexOf(markers[i].title) > 0) {
         bounds.extend(markers[i].getPosition());
       }
@@ -117,11 +119,15 @@ var ViewModel = function () {
 
     // Define marker to populate as one that matches the name of the currently
     // selected palce based on its name
-    var markerToPop = markers.forEach(function (marker) {
+    var markerToPop;
+
+    markers.forEach(function (marker) {
       if (placeItem.name() === marker.title) {
-        return marker;
+        markerToPop = marker;
       }
     });
+
+    toggleBounce(markerToPop);
 
     // using currently clicked place, an empty infowindow and marker associated
     // to place populate the infowindow and show it - this is equivalent to

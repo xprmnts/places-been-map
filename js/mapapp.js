@@ -229,6 +229,7 @@ function initMap() {
 
     // Create an onclick event to open an infowindow at each marker.
     marker.addListener('click', function () {
+      toggleBounce(this);
       populateInfoWindow(this, infowindow, initialPlaces[this.id]);
     });
 
@@ -311,4 +312,17 @@ function makeMarkerIcon(markerColor) {
   new google.maps.Point(10, 34),
   new google.maps.Size(21, 34));
   return markerImage;
+}
+
+function toggleBounce(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
+
+function errorHandFunc() {
+  console.log('Error!');
+  $('#map').html('<p><strong>Uh Oh!</strong> Something/Someone(?) messed up!</p>');
 }
