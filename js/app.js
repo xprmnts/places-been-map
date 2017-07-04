@@ -25,7 +25,6 @@ var ViewModel = function () {
   this.places = ko.observableArray([]);
 
   this.showAllPlaces = function () {
-    console.log('we are here!');
     _this.places.removeAll();
 
     // For each place in list create a list of unique cities to display in filter
@@ -35,6 +34,18 @@ var ViewModel = function () {
       // Render all places at once when app loads
       _this.places.push(new Place(placeItem));
     });
+
+    // adjust the bounds of the map to fit the newly filtered list of places
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < markers.length; i++) {
+      bounds.extend(markers[i].getPosition());
+    }
+
+    map.fitBounds(bounds);
+
+    // adjust the zoom to a minimum level of 13 to avoid super zoom
+    var zoom = map.getZoom();
+    map.setZoom(zoom > 13 ? 13 : zoom);
   };
 
   // For each place in list create a list of unique cities to display in filter
@@ -57,38 +68,20 @@ var ViewModel = function () {
   // If a city is clicked in the dropdown render maerkers fo all the associated
   // places and enable its info window
   this.placesByCity = function (cityName) {
-    var markers = [];// Create empty array to hold marker for current city
+    //var markers = [];// Create empty array to hold marker for current city
     _this.places.removeAll();// Clear places observableArray of history
 
     var infowindow = new google.maps.InfoWindow();
 
     // Add each place to the places observableArray that fits the current
     // city criteria
+    var titles = [];
     initialPlaces.forEach(function (placeItem) {
       if (placeItem.city === cityName.city()) {
 
         // Push place into places if city criteria matches
         _this.places().push(new Place(placeItem));
-
-        // Create a marker for current place
-        var marker = new google.maps.Marker({
-          position: {
-            lat: parseFloat(placeItem.location.lat),
-            lng: parseFloat(placeItem.location.lng),
-          },
-          map: map,
-          title: placeItem.name,
-        });
-
-        // Add current place marker to markers array
-        markers.push(marker);
-
-        // Add a listener event to each markert that populates info window
-        // on click
-        marker.addListener('click', function () {
-          console.log('attempting to load infowindow');
-          populateInfoWindow(marker, infowindow, placeItem);
-        });
+        titles.push(placeItem.name);
       }
     });
 
@@ -98,7 +91,9 @@ var ViewModel = function () {
     // adjust the bounds of the map to fit the newly filtered list of places
     var bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < markers.length; i++) {
-      bounds.extend(markers[i].getPosition());
+      if (titles.indexOf(markers[i].title) > 0) {
+        bounds.extend(markers[i].getPosition());
+      }
     }
 
     map.fitBounds(bounds);
@@ -119,30 +114,19 @@ var ViewModel = function () {
 
     // clear infowindow and set marker poisition
     infowindow = new google.maps.InfoWindow({});
-    marker = new google.maps.Marker({
-      position: {
-        lat: parseFloat(plat),
-        lng: parseFloat(plng),
-      },
-      map: map,
-      title: placeItem.name(),
+
+    var markerToPop = markers.forEach(function (marker) {
+      if (placeItem.name() === marker.title) {
+        return marker;
+      }
     });
 
     // using currently clicked place, an empty infowindow and marker associated
     // to place populate the infowindow and show it - this is equivalent to
     // clicking the marker (with the exception of centering the map on coords)
-    populateInfoWindow(marker, infowindow, placeItem);
-
+    populateInfoWindow(markerToPop, infowindow, placeItem);
   };
 
 };
-
-function clearOverlays() {
-  for (var i = 0; i < markersArray.length; i++) {
-    markers[i].setMap(null);
-  }
-
-  markersArray.length = 0;
-}
 
 ko.applyBindings(new ViewModel());

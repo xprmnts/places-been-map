@@ -2,6 +2,7 @@ var map;
 var markers = [];
 function initMap() {
 
+  // Style the map
   // Create a new StyledMapType object, passing it an array of styles,
   // and the name to be displayed on the map type control.
   var styledMapType = new google.maps.StyledMapType(
@@ -180,8 +181,15 @@ function initMap() {
               },
         ],
       },
-],
+    ],
     { name: 'Styled Map' });
+
+  // Style the markers a bit. This will be our listing marker icon.
+  var defaultIcon = makeMarkerIcon('0091ff');
+
+  // Create a "highlighted location" marker color for when the user
+  // mouses over the marker.
+  var highlightedIcon = makeMarkerIcon('FFFF24');
 
   map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControlOptions: {
@@ -207,6 +215,7 @@ function initMap() {
       map: map,
       position: position,
       title: title,
+      icon: defaultIcon,
       animation: google.maps.Animation.DROP,
       id: i,
     });
@@ -217,6 +226,16 @@ function initMap() {
     // Create an onclick event to open an infowindow at each marker.
     marker.addListener('click', function (x) {
       populateInfoWindow(this, infowindow, initialPlaces[this.id]);
+    });
+
+    // Two event listeners - one for mouseover, one for mouseout,
+    // to change the colors back and forth.
+    marker.addListener('mouseover', function () {
+      this.setIcon(highlightedIcon);
+    });
+
+    marker.addListener('mouseout', function () {
+      this.setIcon(defaultIcon);
     });
 
     bounds.extend(markers[i].position);
@@ -236,6 +255,8 @@ function initMap() {
 // on that markers position.
 function populateInfoWindow(marker, infowindow, placeItem) {
   infowindow.marker = marker;
+  var position = { lat: placeItem.location()[0].lat, lng: placeItem.location()[0].lng };
+  infowindow.setPosition(position);
   var flickrAPI = 'https://api.flickr.com/services/rest/?';
   $.getJSON(flickrAPI, {
     format: 'json',
@@ -260,12 +281,24 @@ function populateInfoWindow(marker, infowindow, placeItem) {
     infowindow.setContent(infoWindowImage);
     infowindow.open(map, marker);
 
-    // infowindow.addListener('closeclick', function () {
-    //   infowindow.setMarker = null;
-    // });
+    infowindow.addListener('closeclick', function () {
+      infowindow.setMarker = null;
+    });
+
   }).fail(function () {
     infowindow.setContent('Sorry! Something went wrong & no image was found');
     infowindow.open(map, marker);
   });
 
+}
+
+function makeMarkerIcon(markerColor) {
+  var markerImage = new google.maps.MarkerImage(
+  'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor +
+  '|40|_|%E2%80%A2',
+  new google.maps.Size(21, 34),
+  new google.maps.Point(0, 0),
+  new google.maps.Point(10, 34),
+  new google.maps.Size(21, 34));
+  return markerImage;
 }
