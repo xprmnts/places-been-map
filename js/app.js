@@ -111,16 +111,6 @@ var ViewModel = function () {
   // When a place is clicked on the navigation menu center the map on it
   // and then open up the infowindow related to it
   this.mapLocation = function (placeItem) {
-
-    // center map on place coordinates
-    var plat = placeItem.location()[0].lat;
-    var plng = placeItem.location()[0].lng;
-    var center = new google.maps.LatLng(plat, plng);
-    map.panTo(center);
-
-    // clear infowindow and set marker poisition
-    infowindow = new google.maps.InfoWindow({});
-
     // Define marker to populate as one that matches the name of the currently
     // selected palce based on its name
     var markerToPop;
@@ -130,6 +120,27 @@ var ViewModel = function () {
         markerToPop = marker;
       }
     });
+
+    if (currentInfoWindow != null && currentInfoWindow.getMap() != null) {
+      currentInfoWindow.close();
+      toggleBounce(markerToPop);
+
+      //If the clicked window is the selected window, deselect it and return
+      if (currentInfoWindow == infoWindow) {
+        currentInfoWindow = null;
+        return;
+      }
+    }
+
+    infowindow = new google.maps.InfoWindow({});
+
+    // center map on place coordinates
+    var plat = placeItem.location()[0].lat;
+    var plng = placeItem.location()[0].lng;
+    var center = new google.maps.LatLng(plat, plng);
+    map.panTo(center);
+
+    // clear infowindow and set marker poisition
 
     toggleBounce(markerToPop);
 

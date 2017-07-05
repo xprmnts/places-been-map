@@ -1,5 +1,6 @@
 var map;
 var markers = [];
+var currentInfoWindow;
 function initMap() {
 
   // Style the map
@@ -234,19 +235,16 @@ function initMap() {
 
     // Create an onclick event to open an infowindow at each marker.
     marker.addListener('click', function () {
-      for (i = 0; i < markers.length; i++) {
-        markers[i].setAnimation(null);
-      }
-
+      clearBounce();
       toggleBounce(this);
+
       if (infowindow.isOpen() === false) {
         populateInfoWindow(this, infowindow, initialPlaces[this.id]);
       } else {
-        if (marker.getAnimation() !== null) {
+        currentInfoWindow.close();
+        if (this.getAnimation() !== null) {
           populateInfoWindow(this, infowindow, initialPlaces[this.id]);
         }
-
-        infowindow.close();
       }
 
     });
@@ -309,7 +307,8 @@ function populateInfoWindow(marker, infowindow, placeItem) {
     '.jpg';
     var infoWindowImage = '<img src="' + src + '" width="320" alt="' + data.title + '">';
     infowindow.setContent(infoWindowImage);
-    infowindow.open(map, marker);
+    currentInfoWindow = infowindow;
+    currentInfoWindow.open(map, marker);
 
     infowindow.addListener('closeclick', function () {
       infowindow.setMarker = null;
@@ -318,7 +317,7 @@ function populateInfoWindow(marker, infowindow, placeItem) {
 
   }).fail(function () {
     infowindow.setContent('Sorry! Something went wrong & no image was found');
-    infowindow.open(map, marker);
+    currentInfoWindow.open(map, marker);
   });
 
 }
@@ -345,4 +344,10 @@ function toggleBounce(marker) {
 function errorHandFunc() {
   console.log('Error!');
   $('#map').html('<p><strong>Uh Oh!</strong> Something/Someone(?) messed up!</p>');
+}
+
+function clearBounce() {
+  for (i = 0; i < markers.length; i++) {
+    markers[i].setAnimation(null);
+  }
 }
