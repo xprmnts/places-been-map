@@ -243,7 +243,7 @@ function initMap() {
       // if the same item in the lsit was clicked close infowindow and stop animation
       // also set current marker to null so the "third" click will
       // restart animation and open infowindow
-      if (currentMarker != null && currentMarker == this) {
+      if (currentMarker !== null && currentMarker == this) {
         currentInfoWindow.close();
         currentInfoWindow = null;
         currentMarker = null;
