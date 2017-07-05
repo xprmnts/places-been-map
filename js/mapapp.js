@@ -292,7 +292,7 @@ function populateInfoWindow(marker, infowindow, placeItem) {
   }
 
   infowindow.setPosition(position);
-  var flickrAPI = 'https://api.flickr.com/services/restx/?';
+  var flickrAPI = 'https://api.flickr.com/services/rest/?';
   $.getJSON(flickrAPI, {
     format: 'json',
     nojsoncallback: 1,
