@@ -113,6 +113,7 @@ var ViewModel = function () {
   this.mapLocation = function (placeItem) {
     // Define marker to populate as one that matches the name of the currently
     // selected palce based on its name
+    clearBounce();
     var markerToPop;
 
     markers.forEach(function (marker) {
@@ -121,15 +122,11 @@ var ViewModel = function () {
       }
     });
 
-    if (currentInfoWindow != null && currentInfoWindow.getMap() != null) {
-      currentInfoWindow.close();
-      toggleBounce(markerToPop);
+    toggleBounce(markerToPop);
 
-      //If the clicked window is the selected window, deselect it and return
-      if (currentInfoWindow == infoWindow) {
-        currentInfoWindow = null;
-        return;
-      }
+    if (currentInfoWindow != null && currentInfoWindow.getMap() != null) {
+      console.log('closing current window');
+      currentInfoWindow.close();
     }
 
     infowindow = new google.maps.InfoWindow({});
@@ -139,10 +136,6 @@ var ViewModel = function () {
     var plng = placeItem.location()[0].lng;
     var center = new google.maps.LatLng(plat, plng);
     map.panTo(center);
-
-    // clear infowindow and set marker poisition
-
-    toggleBounce(markerToPop);
 
     // using currently clicked place, an empty infowindow and marker associated
     // to place populate the infowindow and show it - this is equivalent to
