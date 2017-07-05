@@ -114,33 +114,37 @@ var ViewModel = function () {
     // Define marker to populate as one that matches the name of the currently
     // selected palce based on its name
     clearBounce();
-    var markerToPop;
-
+    var tempMarker;
     markers.forEach(function (marker) {
       if (placeItem.name() === marker.title) {
-        markerToPop = marker;
+        tempMarker = marker;
       }
     });
 
-    toggleBounce(markerToPop);
-
-    if (currentInfoWindow != null && currentInfoWindow.getMap() != null) {
-      console.log('closing current window');
+    // Check if current marker is = to the selected marker
+    // if the same item in the lsit was clicked close infowindow and stop animation
+    // also set current marker to null so the "third" click will
+    // restart animation and open infowindow
+    if (currentMarker != null && currentMarker == tempMarker) {
       currentInfoWindow.close();
+      currentInfoWindow = null;
+      currentMarker = null;
+    } else {
+      currentMarker = tempMarker;
+      infowindow = new google.maps.InfoWindow({});
+
+      // center map on place coordinates
+      var plat = placeItem.location()[0].lat;
+      var plng = placeItem.location()[0].lng;
+      var center = new google.maps.LatLng(plat, plng);
+      map.panTo(center);
+
+      // using currently clicked place, an empty infowindow and marker associated
+      // to place populate the infowindow and show it - this is equivalent to
+      // clicking the marker (with the exception of centering the map on coords)
+      populateInfoWindow(currentMarker, infowindow, placeItem);
     }
 
-    infowindow = new google.maps.InfoWindow({});
-
-    // center map on place coordinates
-    var plat = placeItem.location()[0].lat;
-    var plng = placeItem.location()[0].lng;
-    var center = new google.maps.LatLng(plat, plng);
-    map.panTo(center);
-
-    // using currently clicked place, an empty infowindow and marker associated
-    // to place populate the infowindow and show it - this is equivalent to
-    // clicking the marker (with the exception of centering the map on coords)
-    populateInfoWindow(markerToPop, infowindow, placeItem);
   };
 
 };

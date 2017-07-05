@@ -1,6 +1,8 @@
 var map;
 var markers = [];
 var currentInfoWindow;
+var currentMarker;
+
 function initMap() {
 
   // Style the map
@@ -236,15 +238,18 @@ function initMap() {
     // Create an onclick event to open an infowindow at each marker.
     marker.addListener('click', function () {
       clearBounce();
-      toggleBounce(this);
 
-      if (infowindow.isOpen() === false) {
-        populateInfoWindow(this, infowindow, initialPlaces[this.id]);
-      } else {
+      // Check if current marker is = to the selected marker
+      // if the same item in the lsit was clicked close infowindow and stop animation
+      // also set current marker to null so the "third" click will
+      // restart animation and open infowindow
+      if (currentMarker != null && currentMarker == this) {
         currentInfoWindow.close();
-        if (this.getAnimation() !== null) {
-          populateInfoWindow(this, infowindow, initialPlaces[this.id]);
-        }
+        currentInfoWindow = null;
+        currentMarker = null;
+      } else {
+        currentMarker = this;
+        populateInfoWindow(this, infowindow, initialPlaces[this.id]);
       }
 
     });
@@ -265,9 +270,6 @@ function initMap() {
   // Extend the boundaries of the map for each marker
   map.fitBounds(bounds);
 
-  // Use markerclustererplus community repo to cluster markers if appropriate
-  // var markerCluster = new MarkerClusterer(map, markers,
-  //   { imagePath: '/images/m' });
 
 }
 
@@ -275,6 +277,12 @@ function initMap() {
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
 function populateInfoWindow(marker, infowindow, placeItem) {
+  currentMarker.setAnimation(google.maps.Animation.BOUNCE);
+  if (currentInfoWindow != null && currentInfoWindow.getMap() != null) {
+    console.log('closing current window');
+    currentInfoWindow.close();
+    currentInfoWindow = null;
+  }
 
   infowindow.marker = marker;
   var position = '';
@@ -336,6 +344,7 @@ function makeMarkerIcon(markerColor) {
 function toggleBounce(marker) {
   if (marker.getAnimation() !== null) {
     marker.setAnimation(null);
+    console.log('stop animation');
   } else {
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
