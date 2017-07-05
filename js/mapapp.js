@@ -270,7 +270,6 @@ function initMap() {
   // Extend the boundaries of the map for each marker
   map.fitBounds(bounds);
 
-
 }
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
@@ -293,7 +292,7 @@ function populateInfoWindow(marker, infowindow, placeItem) {
   }
 
   infowindow.setPosition(position);
-  var flickrAPI = 'https://api.flickr.com/services/rest/?';
+  var flickrAPI = 'https://api.flickr.com/services/restx/?';
   $.getJSON(flickrAPI, {
     format: 'json',
     nojsoncallback: 1,
@@ -326,7 +325,7 @@ function populateInfoWindow(marker, infowindow, placeItem) {
 
   }).fail(function () {
     infowindow.setContent('Sorry! Something went wrong & no image was found');
-    currentInfoWindow.open(map, marker);
+    infowindow.open(map, marker);
   });
 
 }
