@@ -321,6 +321,7 @@ function populateInfoWindow(marker, infowindow, placeItem) {
     infowindow.addListener('closeclick', function () {
       infowindow.setMarker = null;
       marker.setAnimation(null);
+      currentMarker = null;
     });
 
   }).fail(function () {
